@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   details: {
-    fontWeight: 'heavy'
+    fontWeight: 'heavy',
+    fontSize: 11
   }
 });
