@@ -22,10 +22,18 @@ export default function ResultsShowScreen({ route }) {
         style={{ width: 350, height: 250, margin: 15 }}
         source={{ uri: result.image_url }}
       />
-      <Text style={{ margin: 5, fontSize: 30, fontWeight: "bold", textAlign: "center" }}>
+      <Text
+        style={{
+          margin: 5,
+          fontSize: 30,
+          fontWeight: "bold",
+          textAlign: "center",
+        }}
+      >
         {result.name}{" "}
       </Text>
       <Text>{result.phone} </Text>
+      {result.is_closed ? <Text>Kapalı </Text> : <Text>Açık </Text>}
     </View>
   );
 }

@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import SearchBar from "../components/SearchBar";
 import useResults from "../hooks/useResults";
 import ResultList from "../components/ResultList";
 
 export default function SearchScreen() {
   const [searchApi, results] = useResults();
-  console.log(results);
+  const [term, setTerm] = useState("");
+  //console.log(results);
 
   const filterResultsByPrice = (price) => {
     return results.filter((result) => {
@@ -15,7 +16,11 @@ export default function SearchScreen() {
   };
   return (
     <View>
-      <SearchBar />
+      <SearchBar
+        term={term}
+        onTermChange={setTerm}
+        onTermSubmit={() => searchApi(term)}
+      />
       <ResultList
         title="Ucuz Restoranlar"
         results={filterResultsByPrice("₺")}
