@@ -1,28 +1,36 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SearchScreen from "./screens/SearchScreen";
-import ResultsShowScreen from "./screens/ResultsShowScreen";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Feather from "@expo/vector-icons/Feather";
+import HomeStack from "./screens/HomeStack";
+import DiscoverStack from "./screens/DiscoverStack";
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerTitle: "Restoran Uygulaması" }}>
-        <Stack.Screen name="SearchScreen" component={SearchScreen} />
-        <Stack.Screen name="ResultsShow" component={ResultsShowScreen} />
-      </Stack.Navigator>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => {
+            let iconName = route.name === "HomeTab" ? "home" : "map-pin";
+            return <Feather name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: "#e53935",
+        })}
+      >
+        <Tab.Screen
+          name="HomeTab"
+          component={HomeStack}
+          options={{ title: "Ana Sayfa" }}
+        />
+        <Tab.Screen
+          name="DiscoverTab"
+          component={DiscoverStack}
+          options={{ title: "Keşfet" }}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

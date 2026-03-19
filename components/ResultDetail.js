@@ -10,7 +10,9 @@ export default function ResultDetail({ result }) {
       />
       <Text style={styles.name}>{result.name}</Text>
       <Text style={styles.details}>
-        {result.rating} Yıldızlı restoran, {result.review_count} Değerlendirme   </Text>
+        {result.rating} Yıldızlı restoran, {result.review_count}{" "}
+        Değerlendirme{" "}
+      </Text>
     </View>
   );
 }
@@ -19,13 +21,12 @@ const styles = StyleSheet.create({
   container: {
     marginLeft: 15,
   },
-  image: { width: 250,
-     height: 120, borderRadius: 8, marginBottom: 5 },
+  image: { width: 250, height: 120, borderRadius: 8, marginBottom: 5 },
   name: {
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   details: {
-    fontWeight: 'heavy',
-    fontSize: 11
-  }
+    fontWeight: "heavy",
+    fontSize: 11,
+  },
 });

@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
-import yelp from "../api/yelp";
+import api from "../api/mock";
 
 export default () => {
   const [results, setResults] = useState([]);
-  const searchApi = async (searchTerm) => {
-    const response = await yelp.get("/search", {
-      params: {
-        limit: 50,
-        term: searchTerm,
-        location: "İstanbul",
-      },
-    });
-    setResults(response.data.businesses);
+
+  const searchApi = async () => {
+    try {
+      const response = await api.get("/restaurants");
+      console.log("MockAPI'den Gelen Veriler:", response.data);
+      setResults(response.data);
+    } catch (err) {
+      console.log("MockAPI Hatası:", err.message);
+    }
   };
+
   useEffect(() => {
-    searchApi("Toast");
+    searchApi();
   }, []);
 
   return [searchApi, results];

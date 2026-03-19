@@ -1,13 +1,21 @@
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import {
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Linking,
+} from "react-native";
 import React, { useEffect, useState } from "react";
-import yelp from "../api/yelp";
+import api from "../api/mock";
+import Feather from "@expo/vector-icons/Feather";
 
 export default function ResultsShowScreen({ route }) {
   const [result, setResult] = useState(null);
   const id = route.params.id;
 
   const getResult = async (id) => {
-    const response = await yelp.get(`/${id}`);
+    const response = await api.get(`/restaurants/${id}`);
     setResult(response.data);
   };
   useEffect(() => {
@@ -16,6 +24,12 @@ export default function ResultsShowScreen({ route }) {
   if (!result) {
     return null;
   }
+
+  const makeCall = () => {
+    if (result.phone) {
+      Linking.openURL(`tel:${result.phone}`);
+    }
+  };
   return (
     <View style={{ justifyContent: "center", alignItems: "center" }}>
       <Image
@@ -32,10 +46,34 @@ export default function ResultsShowScreen({ route }) {
       >
         {result.name}{" "}
       </Text>
-      <Text>{result.phone} </Text>
+      <TouchableOpacity style={styles.phoneContainer} onPress={makeCall}>
+        <Feather name="phone" size={20} color="#e53935" />
+        <Text style={styles.phoneText}>
+          {result.phone ? result.phone : "Telefon bilgisi yok"}
+        </Text>
+      </TouchableOpacity>
       {result.is_closed ? <Text>Kapalı </Text> : <Text>Açık </Text>}
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  phoneText: {
+    fontSize: 18,
+    marginLeft: 10,
+    color: "#e53935",
+    fontWeight: "600",
+  },
+  phoneContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f8f8f8",
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 10,
+    width: "90%",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#eee",
+  },
+});
